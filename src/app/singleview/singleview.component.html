@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-between align-items-center px-3" style="padding-top: 90px;">
+    <i [routerLink]="recipeData.id - 1 === 0 ? '/' : '/' + (recipeData.id - 1) + '/singleview'" class="fa-regular fa-circle-left fs-2 btn btn-outline-danger m-0 p-0 rounded-circle"></i>
+    <p class="fs-1 fw-semibold text-center flex-grow-1 m-0 p-0 text-danger" style="font-family: Crimson Text, serif;">{{recipeData.name}}</p>
+    <i [routerLink]="'/' + (recipeData.id + 1) + '/singleview'" class="fa-regular fa-circle-right fs-2 btn btn-outline-danger m-0 p-0 rounded-circle"></i>
+</div>
+<div style="font-family: PT Serif, serif;">
+    <p class="p-0 m-0 text-center fs-5 fw-medium text-success">
+        {{recipeData.cuisine}} - 
+        <span *ngFor="let meal of recipeData.mealType; let isLast = last">
+          {{meal}}{{isLast ? '' : ', '}}
+        </span>
+      </p>
+</div>
+<div class="px-4 mt-3 mb-5" style="font-family: PT Serif, serif;">
+    <div class="row">
+        <div class="col-md-5 col-sm-12 mt-2">
+            <img [src]="recipeData.image" alt="..." width="100%" height="100%">
+        </div>
+        <div class="col-md-7 col-sm-12 py-auto my-auto">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12 mt-2">
+                    <p>Total Time Consumption : <b>{{recipeData.prepTimeMinutes + recipeData.cookTimeMinutes}} mts</b></p>
+                </div>
+                <div class="col-sm-6 col-xs-12 mt-2">
+                    <p>Ease of Making : <b>{{recipeData.difficulty}}</b></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-xs-12 mt-2">
+                    <p>calories Per Serving : <b>{{recipeData.caloriesPerServing}}g</b></p>
+                </div>
+                <div class="col-sm-6 col-xs-12 mt-2">
+                    <p>
+                        <ng-container *ngFor="let star of getStars(recipeData.rating)">
+                            <i [ngStyle]="{'color': recipeData.rating == 5 ? '#1A5319' : recipeData.rating > 4 ? 'green' : recipeData.rating > 3 ? 'yellow' : 'red'}" class="fa-solid"
+                                [ngClass]="{
+                                    'fa-star': star === 'full',
+                                    'fa-star-half-alt': star === 'half'
+                                }">
+                            </i>
+                        </ng-container>
+                        <b class="text-danger">({{recipeData.reviewCount}})</b>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <p class="mt-4 fw-semibold text-danger">INGREDIENTS - SERVE FOR {{recipeData.servings}}</p>
+                    <ul class="">
+                        <li type="1" *ngFor="let i of recipeData.ingredients;">
+                          {{i}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <p class="mt-4 fw-semibold text-danger">INSTRUCTIONS</p>
+                    <ul class="">
+                        <li type="1" *ngFor="let i of recipeData.instructions;">
+                          {{i}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
